@@ -1,0 +1,44 @@
+# Used the below command to create an user named deployuser1 , where password is disabled and gecos helps to ignore other fields and giving access of a particular folder only  sudo adduser --disabled-password --gecos "" deployuser1
+
+sudo mkdir -p /var/www/myapp
+
+sudo chown -R deployuser:deployuser /var/www/myapp
+sudo chmod -R 750 /var/www/myapp
+
+| Number | Binary | Permissions | Description            |
+| ------ | ------ | ----------- | ---------------------- |
+| 0      | 000    | ---         | No permissions         |
+| 1      | 001    | --x         | Execute only           |
+| 2      | 010    | -w-         | Write only             |
+| 3      | 011    | -wx         | Write + Execute        |
+| 4      | 100    | r--         | Read only              |
+| 5      | 101    | r-x         | Read + Execute         |
+| 6      | 110    | rw-         | Read + Write           |
+| 7      | 111    | rwx         | Read + Write + Execute |
+
+
+# command to not give shell access but can transfer files using scp 
+sudo usermod -s /usr/sbin/nologin deployuser1 
+
+
+Q) What is ufw?
+ufw (Uncomplicated Firewall) is a command-line interface to manage iptables—the built-in Linux firewall. It simplifies firewall configuration for beginners and admins by providing an easy way to allow, deny, or limit network traffic.
+
+🔥 Why use ufw?
+
+    Security: Block unwanted access (e.g., malicious IPs, ports).
+
+    Control: Allow only specific services (e.g., SSH, HTTP).
+
+    Simplicity: Easier than manually editing iptables rules.
+
+✅ Basic Concepts
+
+    Incoming traffic: Connections to your machine.
+
+    Outgoing traffic: Connections from your machine.
+
+    Default policies: What to do when no rule matches (e.g., deny all).
+
+    Rules: Specific permissions or blocks for IPs, ports, or services.
+
