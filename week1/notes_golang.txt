@@ -1,0 +1,47 @@
+### Building memory log file 
+
+=> standard library packages used:
+    | Package   | Purpose                                                 |
+    | --------- | ------------------------------------------------------- |
+    | `bufio`   | Buffered I/O (used for efficient reading/writing files) |
+    | `fmt`     | Formatted I/O: `Println`, `Sprintf`, etc.               |
+    | `os`      | OS-level operations like opening files                  |
+    | `strconv` | String ↔ Number conversions                             |
+    | `strings` | String manipulation functions                           |
+    | `time`    | Time-related functions like `Sleep`, `Now`              |
+
+=> os.Open: Opens a file for reading.
+
+🟨 defer: Schedules file.Close() to run when getMemInfo exits — ensures file always closes even if an error occurs.
+
+=> bufio.NewScanner(file variable) : Creates a buffered line-by-line scanner for the file. Basically string with spaces can be taken whole as input unlike scanf.
+
+=> strings functions:
+    | Function              | Purpose                                      |
+    | --------------------- | -------------------------------------------- |
+    | `strings.HasPrefix()` | Checks if line starts with `"MemTotal:"`     |
+    | `strings.Fields()`    | Splits line into whitespace-separated tokens |
+    | `strconv.Atoi()`      | Converts string to int                       |
+
+
+=> bufio.NewWriter(logFile variable): Creates a buffered writer for the log file. Buffered I/O is faster and more efficient.
+
+=> time.Now(): Gets current local time
+
+=> .Format(...): Converts it to string in given format
+
+=>
+    | Function             | Purpose                                   |
+    | -------------------- | ----------------------------------------- |
+    | `fmt.Sprintf()`      | Builds a formatted string (like `printf`) |
+    | `fmt.Print()`        | Writes to stdout                          |
+    | `writer.WriteString` | Writes string to file buffer              |
+    | `writer.Flush()`     | Forces writing buffered content to disk   |
+
+    here [writer := bufio.NewWriter(logFile)]
+
+=> Golang time layout
+    time.Now().Format("02-01-2006 15:04:05")
+
+
+
