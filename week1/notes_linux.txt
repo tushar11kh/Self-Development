@@ -1,12 +1,12 @@
-##DAY 1
+############################################ DAY 1########################################## 
 
-#SSH server initialization
-Install the SSH server: sudo apt install openssh-server.
-Start the SSH service: sudo systemctl start ssh.
-Enable SSH to run on boot: sudo systemctl enable ssh.
-Verify SSH is running: sudo systemctl status ssh. Look for “active (running)” in the output
+### SSH server initialization
+Install the SSH server: "sudo apt install openssh-server".
+Start the SSH service: "sudo systemctl start ssh".
+Enable SSH to run on boot: "sudo systemctl enable ssh".
+Verify SSH is running: "sudo systemctl status ssh". Look for “active (running)” in the output
 
-#Used the below command to create an user named deployuser1 , 
+###Used the below command to create an user named deployuser1 , 
 #where password is disabled and gecos helps to ignore other fields 
 #and giving access of a particular folder only  sudo adduser 
 #--disabled-password --gecos "" deployuser1
@@ -16,7 +16,7 @@ sudo chown -R deployuser:deployuser /var/www/myapp
 sudo chmod -R 750 /var/www/myapp -> Owner   group   others
                                       7       5        0
 
-# file permission number and binary 
+### file permission number and binary 
 | Number | Binary | Permissions | Description            |
 | ------ | ------ | ----------- | ---------------------- |
 | 0      | 000    | ---         | No permissions         |
@@ -29,17 +29,17 @@ sudo chmod -R 750 /var/www/myapp -> Owner   group   others
 | 7      | 111    | rwx         | Read + Write + Execute |
 
 
-# command to not give shell access but can transfer files using scp 
+### command to not give shell access but can transfer files using scp 
 sudo usermod -s /usr/sbin/nologin deployuser1 
 
-# Set up network
+### Set up network
 You can fix ip address so that whenever you ssh you don't need to change ip address in command everytime.
 Like we did in ubuntu tplink network. 192.168.1.17
 
 
 
-## DAY 2
-#What is ufw?
+############################################  DAY 2 ########################################## 
+###What is ufw?
 ufw (Uncomplicated Firewall) is a command-line interface 
 to manage iptables—the built-in Linux firewall. It simplifies 
 firewall configuration for beginners and admins by providing an easy way to allow, deny, or 
@@ -174,3 +174,61 @@ available: 6.9GB = system is healthy, because 6.2GB is cache and reclaimable
 | MemFree      | Truly free memory, not used for anything       | Rarely useful in isolation          |
 | MemAvailable | Free + cache + reclaimable memory              | Use this for memory health          |
 
+
+########################################## DAY4 ########################################## 
+
+# Linux files
+=> /proc/stat: A virtual file in Linux that contains statistics about the system, especially CPU usage.
+                It’s updated frequently. The line starting with cpu shows cumulative CPU time since boot,
+                broken into different categories.
+                Should read -> https://www.linuxhowtos.org/System/procstat.htm
+
+### Point to write .sh/script files
+=> #!/bin/bash
+Shebang — It tells the system that this script should be run using the Bash shell.
+Without this, the system might try to execute it using another shell like sh, which may behave differently.
+
+=> function_name() {}
+Defines a function in Bash.
+Functions group reusable code. You can call this function anywhere in the script using function_name.
+In this script, get_cpu_times is defined and used to extract CPU stats.
+
+=> awk '/^cpu / {print ...}'
+awk is a text-processing utility.
+It reads /proc/stat, finds the line that starts with cpu (note the space),
+and prints columns 2 to 8, which represent CPU time in various modes (user, system, idle, etc.).
+
+=> read -r var1 var2 ...
+Reads space-separated input into multiple variables.
+-r tells Bash not to treat backslashes (\) as escape characters.
+This helps accurately parse the output from commands like awk.
+
+=> < <(command)
+This is process substitution.
+It runs the command inside the () in a sub-shell and provides its output as a file-like input
+to the left-hand side command (such as read).
+
+=> sleep N
+Pauses script execution for N seconds.
+In this script, sleep 1 gives a 1-second delay between two CPU readings.
+
+=> echo
+Prints output to the terminal.
+Used here to display the calculated CPU usage percentage.
+
+
+=> #
+Denotes a comment in Bash.
+Everything after # on the same line is ignored by the shell.
+Useful for explaining what the code is doing.
+
+### Connect SSH to vscode
+in config file in .ssh write this:
+
+Host ubuntu-mac
+    HostName 192.168.1.17
+    User tk
+    IdentityFile ~/.ssh/ubuntu_mac_key
+    IdentitiesOnly yes
+
+### Bash script to get cpu usage using /proc/stat
