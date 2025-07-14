@@ -1,10 +1,22 @@
-# Used the below command to create an user named deployuser1 , where password is disabled and gecos helps to ignore other fields and giving access of a particular folder only  sudo adduser --disabled-password --gecos "" deployuser1
+##DAY 1
+
+#SSH server initialization
+Install the SSH server: sudo apt install openssh-server.
+Start the SSH service: sudo systemctl start ssh.
+Enable SSH to run on boot: sudo systemctl enable ssh.
+Verify SSH is running: sudo systemctl status ssh. Look for “active (running)” in the output
+
+#Used the below command to create an user named deployuser1 , 
+#where password is disabled and gecos helps to ignore other fields 
+#and giving access of a particular folder only  sudo adduser 
+#--disabled-password --gecos "" deployuser1
 
 sudo mkdir -p /var/www/myapp
-
 sudo chown -R deployuser:deployuser /var/www/myapp
-sudo chmod -R 750 /var/www/myapp
+sudo chmod -R 750 /var/www/myapp -> Owner   group   others
+                                      7       5        0
 
+# file permission number and binary 
 | Number | Binary | Permissions | Description            |
 | ------ | ------ | ----------- | ---------------------- |
 | 0      | 000    | ---         | No permissions         |
@@ -20,9 +32,18 @@ sudo chmod -R 750 /var/www/myapp
 # command to not give shell access but can transfer files using scp 
 sudo usermod -s /usr/sbin/nologin deployuser1 
 
+# Set up network
+You can fix ip address so that whenever you ssh you don't need to change ip address in command everytime.
+Like we did in ubuntu tplink network. 192.168.1.17
 
-Q) What is ufw?
-ufw (Uncomplicated Firewall) is a command-line interface to manage iptables—the built-in Linux firewall. It simplifies firewall configuration for beginners and admins by providing an easy way to allow, deny, or limit network traffic.
+
+
+## DAY 2
+#What is ufw?
+ufw (Uncomplicated Firewall) is a command-line interface 
+to manage iptables—the built-in Linux firewall. It simplifies 
+firewall configuration for beginners and admins by providing an easy way to allow, deny, or 
+limit network traffic.
 
 🔥 Why use ufw?
 
@@ -41,4 +62,115 @@ ufw (Uncomplicated Firewall) is a command-line interface to manage iptables—th
     Default policies: What to do when no rule matches (e.g., deny all).
 
     Rules: Specific permissions or blocks for IPs, ports, or services.
+
+
+🔹 What is CPU Time?
+
+CPU time refers to the actual time for which a CPU core was actively working 
+on a process or task (as opposed to being idle or waiting).
+🔸 Types of CPU time:
+
+    User time: Time spent running user-space processes (e.g., your Go app).
+
+    System time: Time spent running kernel-space operations (e.g., system calls, driver operations).
+
+    Idle time: CPU is not doing any task.
+
+    I/O wait: Time spent waiting for I/O (like disk or network).
+
+🔸 How to check it:
+
+Use the top, htop, or vmstat command.
+
+Example from top:
+
+=> %Cpu(s):  5.5 us,  2.0 sy,  0.0 ni, 92.0 id,  0.3 wa,  0.0 hi,  0.2 si,  0.0 st
+
+Here, us is user time, sy is system time, id is idle, wa is I/O wait.
+
+✅ Why it matters (for DevOps/Infra):
+
+    High system time may indicate kernel-level issues or too many syscalls.
+
+    High user time shows CPU-bound processes (like compression or Go computations).
+
+    Helps diagnose performance bottlenecks.
+
+🔹 What is Load Average?
+
+Load average represents the average number of processes waiting for CPU over a period of time.
+🔸 Seen using:
+
+uptime
+# or
+cat /proc/loadavg
+
+
+Example:
+
+load average: 1.23, 0.75, 0.60
+
+→ These are 1-minute, 5-minute, and 15-minute averages.
+
+🔸 How to interpret:
+
+Compare the numbers against the number of logical CPU cores.
+
+    If you have 4 cores:
+
+        Load average of 4.00 means full capacity.
+
+        Load average of >4.00 = overloaded.
+
+        Load average of <4.00 = under-utilized.
+
+✅ Why it matters:
+
+    Helps in autoscaling decisions on cloud (e.g., AWS EC2 CPU alarms).
+
+    Identifies CPU pressure and queuing of processes.
+
+    Important for alerting in DevOps and observability tools like Prometheus.
+
+    
+🔹 Difference Between MemFree and MemAvailable
+
+These come from /proc/meminfo and free -m.
+
+| Metric           | Meaning                                                                                      |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+|   MemFree        | Total **unallocated** RAM (not used by anything at all)                                      |
+|   MemAvailable   | Total memory that is **available for use**, including cache,                                 |
+                   |  buffers, and reclaimable memory                                                             |  
+
+🔸 Why is MemAvailable often higher?
+
+Linux uses unused memory as disk cache and buffers to speed up I/O. 
+This memory can be reclaimed if needed.
+So even if MemFree is low, the system isn’t necessarily low on memory.
+
+🔸 Example:
+
+$ free -h
+              total        used        free      shared  buff/cache   available
+Mem:           7.7G        1.2G        300M        200M        6.2G        6.9G
+
+free: 300MB = very low
+
+available: 6.9GB = system is healthy, because 6.2GB is cache and reclaimable
+
+✅ Why it matters:
+
+    Monitoring tools (like Prometheus node exporter) should use MemAvailable.
+
+    Don’t panic just by looking at low MemFree — Linux is using RAM effectively.
+
+🔧 Cheat Sheet:
+
+| Term         | Meaning                                        | How to Use It                       |
+| ------------ | ---------------------------------------------- | ----------------------------------- |
+| CPU Time     | How long the CPU was active (user/system time) | Use `top`, `vmstat`, `pidstat`      |
+| Load Average | Processes waiting for CPU (1, 5, 15 min)       | Use `uptime`, compare to core count |
+| MemFree      | Truly free memory, not used for anything       | Rarely useful in isolation          |
+| MemAvailable | Free + cache + reclaimable memory              | Use this for memory health          |
 
