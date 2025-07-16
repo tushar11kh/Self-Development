@@ -1,3 +1,5 @@
+########################################## DAY4 ########################################## 
+
 ### Building memory log file 
 
 => standard library packages used:
@@ -15,6 +17,9 @@
 🟨 defer: Schedules file.Close() to run when getMemInfo exits — ensures file always closes even if an error occurs.
 
 => bufio.NewScanner(file variable) : Creates a buffered line-by-line scanner for the file. Basically string with spaces can be taken whole as input unlike scanf.
+    sc:=bufio.NewScanner(file variable)
+    sc.scan()->scans file
+    sc.text()->read text
 
 => strings functions:
     | Function              | Purpose                                      |
@@ -43,5 +48,14 @@
 => Golang time layout
     time.Now().Format("02-01-2006 15:04:05")
 
+=> go program here: https://github.com/tushar11kh/Self-Development/blob/main/week1/coding/mem-usage/main.go
 
+########################## Day 5 ##########################
 
+### Building a cli to get cpu usage and memory usage using flag
+
+=> flag library is used
+=> flag.Bool/string/int etc(name,value,usage) ->start point for flag
+=> flag.Parse() -> Parses the command-line flags and arguments passed to your Go program. You must call it before you use the values of any defined flags.Without calling flag.Parse(), the flags will not be initialized
+
+=> github link: 
