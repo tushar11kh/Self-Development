@@ -48,7 +48,7 @@
 => Golang time layout
     time.Now().Format("02-01-2006 15:04:05")
 
-=> go program here: https://github.com/tushar11kh/Self-Development/blob/main/week1/coding/mem-usage/main.go
+=> go program here: https://github.com/tushar11kh/Self-Development/blob/main/week1/mem-usage/main.go
 
 ########################## Day 5 ##########################
 
@@ -58,7 +58,7 @@
 => flag.Bool/string/int etc(name,value,usage) ->start point for flag
 => flag.Parse() -> Parses the command-line flags and arguments passed to your Go program. You must call it before you use the values of any defined flags.Without calling flag.Parse(), the flags will not be initialized
 
-=> github link: https://github.com/tushar11kh/Self-Development/blob/main/week1/coding/flag_cli/main.go
+=> github link: https://github.com/tushar11kh/Self-Development/blob/main/week1/flag_cli/main.go
 
 ########################################## DAY 6 ########################################## 
 
@@ -83,3 +83,5 @@
 🟢 string(body)
 
     Converts raw byte data into a string for readable output.
+
+flag_cli file with http => https://github.com/tushar11kh/Self-Development/blob/main/week2/flag_cli/main.go

@@ -232,7 +232,7 @@ Host ubuntu-mac
     IdentitiesOnly yes
 
 ### Bash script to get cpu usage using /proc/stat
-https://github.com/tushar11kh/Self-Development/blob/main/week1/coding/cpu_usage.sh
+https://github.com/tushar11kh/Self-Development/blob/main/week1/cpu_usage.sh
 
 
 ########################################## DAY 5 ########################################## 
