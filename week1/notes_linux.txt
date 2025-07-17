@@ -233,3 +233,214 @@ Host ubuntu-mac
 
 ### Bash script to get cpu usage using /proc/stat
 https://github.com/tushar11kh/Self-Development/blob/main/week1/coding/cpu_usage.sh
+
+
+########################################## DAY 5 ########################################## 
+
+###SYSTEMD
+
+✅ What is systemd?
+
+systemd is the default init system on most modern Linux distributions (like Ubuntu, CentOS, Debian, Fedora). It is responsible for booting the system, managing services, mounting filesystems, and handling processes.
+🔧 1. What is an Init System?
+
+An init system is the first process (PID 1) started by the Linux kernel during boot. Its job:
+
+    Set up the system environment
+
+    Start services (like SSH, networking, Docker)
+
+    Manage dependencies between them
+
+    Handle shutdown and reboot
+
+Historically, systems used:
+
+    SysVinit
+
+    Upstart
+
+    Now, mostly systemd
+
+⚙️ 2. Why is systemd Important?
+
+    | Feature                | What it Means                                          |
+    | ---------------------- | ------------------------------------------------------ |
+    | Parallel Service Start | Speeds up boot by not starting services one by one     |
+    | Dependency Mgmt        | Starts services only when their dependencies are ready |
+    | Unified Tooling        | `systemctl`, `journalctl`, etc. — consistent interface |
+    | Service Monitoring     | Automatically restarts services if they crash          |
+    | Logging                | Uses built-in journal (no need for separate syslog)    |
+
+
+📂 3. Where Is systemd Configured?
+
+    | Type                       | Location                                              |
+    | -------------------------- | ----------------------------------------------------- |
+    | Default Unit Files         | `/usr/lib/systemd/system/`                            |
+    | Custom/Override Unit Files | `/etc/systemd/system/`                                |
+    | Active Services at Boot    | Linked in `/etc/systemd/system/default.target.wants/` |
+
+
+📦 4. What Are systemd Units?
+
+    Units are configuration files that tell systemd how to start/manage something.
+
+    | Unit Type | Purpose                                              | File Extension |
+    | --------- | ---------------------------------------------------- | -------------- |
+    | `service` | Defines a system service                             | `.service`     |
+    | `target`  | Groups other units (like runlevels)                  | `.target`      |
+    | `mount`   | Manages a mount point                                | `.mount`       |
+    | `socket`  | Listens for sockets (like systemd-socket activation) | `.socket`      |
+    | `timer`   | Cron-like scheduling                                 | `.timer`       |
+
+
+🔄 5. Boot Process with systemd
+
+Here's what happens during a typical boot:
+
+    Kernel loads and executes /sbin/init → this is a symlink to systemd.
+
+    systemd loads its unit files.
+
+    It looks for its default target (usually default.target, linked to graphical.target or multi-user.target)
+
+    It starts all the services required by that target and its dependencies.
+
+You can view your default boot target with:
+
+systemctl get-default
+
+Common targets:
+
+| Target              | Description                  |
+| ------------------- | ---------------------------- |
+| `multi-user.target` | CLI-only, networking enabled |
+| `graphical.target`  | GUI + networking             |
+| `rescue.target`     | Single-user mode             |
+| `poweroff.target`   | System shutdown              |
+| `reboot.target`     | System restart               |
+
+🧩 6. Example: service unit file
+
+File: /etc/systemd/system/foobar.service
+
+[Unit]
+Description=Run foobar service
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/foobar
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+| Section     | What It Does                           |
+| ----------- | -------------------------------------- |
+| `[Unit]`    | Describes the unit and when to start   |
+| `[Service]` | Defines how to start, stop, restart    |
+| `[Install]` | Used when enabling service (boot link) |
+
+🛠️ 7. Common systemctl Commands
+
+    | Action                 | Command                                |
+    | ---------------------- | -------------------------------------- |
+    | View all running units | `systemctl list-units`                 |
+    | Start a service        | `sudo systemctl start nginx.service`   |
+    | Stop a service         | `sudo systemctl stop nginx.service`    |
+    | Restart a service      | `sudo systemctl restart nginx.service` |
+    | View service status    | `systemctl status nginx.service`       |
+    | Enable at boot         | `sudo systemctl enable nginx.service`  |
+    | Disable at boot        | `sudo systemctl disable nginx.service` |
+    | View logs              | `journalctl -u nginx.service`          |
+
+📌 8. Check if You're Using systemd
+
+ps -p 1 -o comm=
+
+Output will be:
+
+systemd
+
+Also, look for:
+
+/usr/lib/systemd/
+
+🧠 9. Key Concepts to Remember
+
+    | Concept            | Meaning                                                |
+    | ------------------ | ------------------------------------------------------ |
+    | `systemctl`        | Command-line tool to manage systemd                    |
+    | `journalctl`       | Log viewer for systemd services                        |
+    | `unit`             | A resource systemd manages (service, mount, socket...) |
+    | `target`           | A group of units (like runlevels)                      |
+    | `enable`/`disable` | Add/remove from default target                         |
+    | `WantedBy`         | Used in `[Install]` section to link service to target  |
+
+
+💡 10. Pro Tips for DevOps
+
+    📁 Store custom unit files in /etc/systemd/system/
+
+    🛠 After editing a unit, always reload:
+
+sudo systemctl daemon-reexec   # Full reload
+sudo systemctl daemon-reload   # Reload unit files
+
+🚀 Want to run a Go/CLI app on boot? Make a .service file!
+
+🔄 Use Restart=on-failure to auto-recover crashed services
+
+🧪 Debug slow boot:
+
+systemd-analyze blame
+
+
+### using our golang flag_cli tool for systemd
+
+    | Step |    Action                                                 |
+    | ---- | --------------------------------------------------------- |
+    | 1️⃣   | Build: `go build -o name_of_program_or_service main.go`    |
+    | 2️⃣   | Move: `sudo mv name_of_prog /usr/local/bin/`               |
+    | 3️⃣   | Create service: `/etc/systemd/system/name_of_prog.service` |
+    | 4️⃣   | Enable & start: `systemctl enable/start`                   |
+    | 5️⃣   | Monitor: `systemctl status`, `journalctl`                  |
+
+### Format of a .service file
+
+a .service file is a text-based configuration file with three main sections:
+
+    [Unit]      → Metadata and dependencies
+    [Service]   → Execution settings (how to run it)
+    [Install]   → When to start it (boot-time integration)
+
+=> Sample:
+
+    [Unit]
+    Description=My CLI system monitor tool
+    After=network.target
+
+    [Service]
+    ExecStart=/usr/local/bin/mycli --all
+    Restart=on-failure
+
+    [Install]
+    WantedBy=multi-user.target
+
+
+=>🔸 Common Unit dependencies:
+
+    network.target — if your service needs networking
+
+    local-fs.target — waits for filesystems to be ready
+
+    syslog.target — if you rely on logging early
+
+=> Most common install values:
+
+    multi-user.target → boots in CLI mode (like runlevel 3)
+
+    graphical.target → boots with GUI
+
+    default.target → usually links to graphical or multi-user
