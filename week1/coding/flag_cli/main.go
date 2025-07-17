@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -14,6 +16,7 @@ func main() {
 
 	cpuFlag := flag.Bool("cpu", false, "print cpu usage")
 	memFlag := flag.Bool("mem", false, "print memory usage")
+	httpFlag := flag.Bool("http", false, "print http get")
 	allFlag := flag.Bool("all", false, "print hardware usage")
 
 	flag.Parse()
@@ -25,8 +28,30 @@ func main() {
 	} else if *allFlag {
 		showCpu()
 		showMem()
+	} else if *httpFlag {
+		httpReq()
 	} else {
 		fmt.Println("use --help")
+	}
+
+}
+
+func httpReq() {
+
+	resp, err := http.Get("https://postman-echo.com/get")
+
+	if err != nil {
+		fmt.Println("Url invalid/not working")
+		return
+	}
+	defer resp.Body.Close()
+
+	body, _ := io.ReadAll(resp.Body)
+
+	fmt.Println("HTTP REQUEST\n")
+	fmt.Println("Status: ", resp.Status)
+	if resp.StatusCode == 200 {
+		fmt.Println("Json Body: ", string(body))
 	}
 
 }

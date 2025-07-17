@@ -59,3 +59,27 @@
 => flag.Parse() -> Parses the command-line flags and arguments passed to your Go program. You must call it before you use the values of any defined flags.Without calling flag.Parse(), the flags will not be initialized
 
 => github link: https://github.com/tushar11kh/Self-Development/blob/main/week1/coding/flag_cli/main.go
+
+########################################## DAY 6 ########################################## 
+
+### Http 
+=> functions and methods used when testing http get
+🟢 http.Get (url string)
+
+    Shorthand HTTP GET request. Returns: (*http.Response, error)
+
+🟢 resp.Body (io.ReadCloser)
+
+    Holds the actual body of the HTTP response.
+
+    It needs to be closed after use → resp.Body.Close()
+
+🟢 io.ReadAll
+
+    Reads all contents of an io.Reader (like a file or HTTP body).
+
+    Returns ([]byte, error)
+
+🟢 string(body)
+
+    Converts raw byte data into a string for readable output.
