@@ -1,0 +1,24 @@
+### Resources-> https://www.youtube.com/watch?v=N4sJj-SxX00
+
+    =>Documentation: https://docs.aws.amazon.com
+
+######################################### DAY 7 ################################### 
+
+### Virtualization
+https://drive.google.com/file/d/1fYg7IlsvgKzZcU-elwsZvAwiuA1EQgfA/view?usp=share_link
+
+### Cloud Computing
+https://drive.google.com/file/d/1Z4I9pkiP5xMBOH7QsMhpoOgpzYdvULFr/view?usp=share_link
+
+### AWS Basic
+https://drive.google.com/file/d/1waycCM-UwASOGVG522QpL707vdG0diUx/view?usp=share_link
+
+### EC2 (Elastic Compute Cloud)
+
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html
+https://drive.google.com/file/d/1Zy0RnnsABRhsCgpTALx9XA7tlHUNDUsP/view?usp=share_link
+
+### S3. (Amazon Simple Storage Service )
+https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html
+https://drive.google.com/file/d/1dwnwXOWrlJ035atf1gvJcm_tVHTBfF2I/view?usp=share_link
+
