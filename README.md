@@ -471,4 +471,4 @@ Hey there! This is my journey to getting into Devops,Cloud infrastructure,web3.
 - **Skills**: Git, Docker, Terraform, Kubernetes, AWS, Go, Ethereum light node, Solana testnet, Prometheus/Grafana.
 - **Portfolio**: 7 GitHub projects (`sys-monitor`, `docker-check`, `docker-stack`, `aws-monitor`, `eth-ping`, `kube-eth`, `web3-toolkit`).
 - **Certification**: AWS Solutions Architect – Associate ($150).
-- **Job Prospects**: 70-80% chance for $80K-$100K remote DevOps/Web3 roles; $120K possible with certification and networking.
+
