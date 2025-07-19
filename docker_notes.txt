@@ -119,6 +119,28 @@ Basic Structure of a Dockerfile
 
             Clean, lean deployment image
 
+        
+        =>Example
+
+            # Build stage
+            FROM golang:1.24-bullseye AS builder
+
+            WORKDIR /app
+            COPY . .
+
+            RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o main .
+
+            # Runtime stage
+            FROM alpine:latest
+
+            WORKDIR /app
+
+            COPY --from=builder /app/main .
+
+            EXPOSE 8080
+
+            CMD ["./main"]
+
 
 
 =>Remove docker files,containers,volumes etc…….. do look at all—force……modify accordingly
