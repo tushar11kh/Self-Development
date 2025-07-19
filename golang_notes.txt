@@ -85,3 +85,51 @@
     Converts raw byte data into a string for readable output.
 
 flag_cli file with http => https://github.com/tushar11kh/Self-Development/blob/main/week2/flag_cli/main.go
+
+########################################## DAY 8 ########################################## 
+
+### writing an API to test
+
+    🔹 From net/http package
+
+        http.HandleFunc() – registers a route and handler function
+
+        http.ListenAndServe() – starts the HTTP server
+
+        http.Error() – sends an error response to the client
+
+        r.URL.Query().Get("id") – gets a query parameter from the URL (r is *http.Request)
+
+    🔹 From encoding/json package
+
+        json.NewEncoder(w).Encode() – encodes the person struct to JSON and writes the response
+
+    🔹 From log package
+
+        log.Fatal() – logs a fatal error and exits the program
+
+    ✅ Go Types and Structs
+
+        http.ResponseWriter – interface used to construct an HTTP response
+
+        *http.Request – pointer to the HTTP request object
+
+        map[string]Person – a map used to store personal data based on ID
+
+        struct – used to define the Person type with Name and Age fields
+
+    ✅ Other Key Elements
+
+        json:"name" and json:"age" – struct field tags for JSON serialization
+
+        w.Header().Set("Content-Type", "application/json") – sets the content type of the HTTP response to JSON
+
+        log.Fatal – terminates the program on server startup error
+
+    ✅ Status http error
+
+        http.StatusBadRequest
+
+        http.StatusNotFound
+
+        http.StatusInternalServerError

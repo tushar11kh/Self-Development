@@ -466,4 +466,4 @@
 - **Skills**: Git, Docker (secure), Terraform (advanced), Kubernetes (Helm, EKS), AWS, Go, Ethereum light node, Solana testnet, Polygon RPC, Prometheus/Grafana, ArgoCD.
 - **Portfolio**: 7 GitHub projects (`sys-monitor`, `docker-check`, `docker-stack`, `aws-monitor`, `eth-ping`, `kube-eth`, `web3-toolkit`), blog posts, system design doc.
 - **Certification**: AWS Solutions Architect – Associate ($150).
-- **Job Prospects**: 70-80% chance for $80K-$100K remote DevOps/Web3 roles; $120K possible with certification, networking, and system design skills.
+

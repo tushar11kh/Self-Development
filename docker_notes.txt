@@ -64,26 +64,60 @@ https://docs.docker.com/get-started/docker-overview/
 
 ###
 
-=>Dockerfile
+=> Simple Dockerfile
 
-    # Build stage
-    FROM golang:1.24-bullseye AS builder
+        # Base image with Go tools installed
+        FROM golang:1.21-alpine
 
-    WORKDIR /app
-    COPY . .
+        # Set working directory inside the container
+        WORKDIR /app
 
-    RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o main .
+        # Copy go.mod and go.sum files first for dependency caching
+        COPY go.mod go.sum ./
 
-    # Runtime stage
-    FROM alpine:latest
+        # Download dependencies
+        RUN go mod download
 
-    WORKDIR /app
+        # Copy the rest of your source code
+        COPY . .
 
-    COPY --from=builder /app/main .
+        # Build the application
+        RUN go build -o myapp
 
-    EXPOSE 8080
+        # Run the application by default
+        CMD ["./myapp"]
 
-    CMD ["./main"]
+
+Basic Structure of a Dockerfile
+
+=>Each line in a Dockerfile is an instruction. Common instructions include:
+
+    Base Image (FROM):Specifies the starting point. Many official images exist for common languages and operating systems.
+
+    Working Directory (WORKDIR):Sets the folder all subsequent commands operate from.
+
+    Copy Files (COPY):Moves files from your local project into the image. Best practice is to copy dependency files and download libraries before adding entire source code, enabling Docker to cache layers and speed up rebuilds.
+
+    Run Commands (RUN):Installs dependencies, compiles code, or performs setup tasks. Each RUN creates a new image layer.
+
+    Start Command (CMD or ENTRYPOINT):Defines what happens when the container starts. CMD can be overridden at runtime, while ENTRYPOINT is fixed in most use-cases.
+
+    ENV: Set environment variables.
+
+    EXPOSE: Document the ports your app uses.
+
+
+=> Multi-stage Dockerfile
+
+        To separate the build process from the runtime environment for:
+
+            Minimal final image size
+
+            Improved security
+
+            Code obfuscation (no source or build tools in final image)
+
+            Clean, lean deployment image
 
 
 
@@ -109,3 +143,4 @@ https://docs.docker.com/get-started/docker-overview/
         docker load -i testingapi.tar -> on ubuntu terminal
 
         docker run -d -p 8080:8080 --name testingapi-server testingapi
+
