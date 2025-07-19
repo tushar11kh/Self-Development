@@ -1,8 +1,7 @@
 # 13-Week Mixed Roadmap: DevOps, Cloud, Go, and Web3 (8 Hours/Day)
 
-**Goal**: Land a $80K-$120K remote/international job in DevOps or Web3 infrastructure.  
 **Hardware**: Ubuntu MacBook (8GB/256GB, EC2-like), M3 MacBook (24GB/512GB).  
-**Focus**: Blend Git, Docker, Terraform, Kubernetes, AWS, Go, blockchain fundamentals, and Ethereum (light node, monitoring, advanced ops) weekly, with enhanced Kubernetes (Helm, EKS), Docker security, Terraform (S3 backend), CI/CD (ArgoCD), and system design. No Polygon/Solana; blockchain added in Week 5, Ethereum shifted (Week 7, 9-10).  
+**Focus**: Blend Git, Docker, Terraform, Kubernetes, AWS, Go, blockchain fundamentals, and Solana (testnet node, monitoring, advanced ops) weekly, with enhanced Kubernetes (Helm, EKS), Docker security, Terraform (S3 backend), CI/CD (ArgoCD), and system design. No Polygon/Ethereum; Solana replaces Ethereum in Weeks 7, 9-10.  
 **Structure**: Each week mixes 2-3 skills with daily topics (Day 1-5, 8 hours), weekend projects, and resources. Each topic has a one-line intro.
 
 ---
@@ -152,16 +151,16 @@
 - **Day 1** (Ubuntu: Docker, M3: Blockchain):
   - Blockchain Basics: Understand blockchain as a decentralized, immutable ledger (2h).
   - Docker Installation: Install Docker to run containerized apps (2h).
-  - Consensus Mechanisms: Learn Proof of Work and Proof of Stake for Ethereum (2h).
+  - Consensus Mechanisms: Learn Proof of History and Proof of Stake for Solana (2h).
   - Docker Multi-Stage Builds: Use multi-stage builds for smaller images (2h).
 - **Day 2** (Ubuntu: Docker, M3: Blockchain):
-  - Ethereum Network: Explore mainnet, testnets (e.g., Sepolia), and node types (2h).
+  - Solana Network: Explore mainnet, testnets (e.g., Devnet), and node types (2h).
   - Docker Image Hardening: Learn to minimize images with `distroless` (2h).
-  - Public vs. Private Blockchains: Grasp Ethereum as a public blockchain (2h).
+  - Public vs. Private Blockchains: Grasp Solana as a public blockchain (2h).
   - Docker Run: Practice `docker run` with custom options (2h).
 - **Day 3** (M3):
   - Go CLI for Docker: Build a CLI to check Docker container status (2h).
-  - Ethereum RPC Basics: Learn JSON-RPC for node interaction (e.g., `eth_blockNumber`) (2h).
+  - Solana RPC Basics: Learn JSON-RPC for node interaction (e.g., `getBlockHeight`) (2h).
   - Docker Security Scanning: Scan images with Trivy for vulnerabilities (2h).
   - Go Modules: Use Go modules for dependency management (2h).
 - **Day 4** (Ubuntu: Docker, M3: Go):
@@ -176,34 +175,34 @@
   - GitHub README: Add Docker CLI setup to repo README (2h).
 - **Weekend Project**: `docker-block` – Secure Dockerized Go CLI to manage containers, GitHub repo with README.
 - **Definition of Done**: CLI manages containers, image is secure, repo has README with setup, blockchain essentials understood.
-- **Resources**: Ethereum.org “Introduction to Ethereum”, Docker Docs, Trivy Docs.
+- **Resources**: Solana Docs “Introduction to Solana”, Docker Docs, Trivy Docs.
 - **Hardware**: Ubuntu MacBook (Docker), M3 MacBook (Go, Blockchain).
 - **Outcome**: Blockchain fundamentals, secure Docker basics, Go CLI.
 
 ---
 
 ## Week 6: Prometheus, AWS S3, and Blockchain Deep Dive
-- **Goals**: Setup Prometheus, use S3, explore deeper blockchain concepts.
+- **Goals**: Setup Prometheus, use S3, explore deeper blockchain concepts for Solana.
 - **Day 1** (Ubuntu: Prometheus, M3: AWS):
   - Prometheus Installation: Install Prometheus and Node Exporter for metrics (2h).
   - AWS S3 Setup: Create S3 bucket and sync sample logs (2h).
-  - Smart Contracts: Learn smart contracts as self-executing code on Ethereum (2h).
+  - Solana Programs: Learn programs as Solana’s on-chain logic (2h).
   - AWS IAM Basics: Setup IAM user for S3 access (2h).
 - **Day 2** (Ubuntu: Prometheus, M3: Blockchain):
   - Go Metrics Tool: Build Go tool to export system metrics to Prometheus (2h).
-  - Ethereum EVM: Understand EVM for executing smart contracts (2h).
+  - Solana Account Model: Understand Solana’s account-based data storage (2h).
   - Prometheus Configuration: Setup `prometheus.yml` for custom metrics (2h).
-  - Ethereum Gas: Grasp gas fees for transactions and contracts (2h).
+  - Lamports and Transactions: Grasp lamports as Solana’s fee system (2h).
 - **Day 3** (M3):
   - AWS S3 IAM Role: Create IAM role for S3 write access (2h).
-  - Ethereum Accounts: Learn EOAs vs. contract accounts (2h).
+  - Solana Accounts: Learn account types (e.g., program, user accounts) (2h).
   - Go S3 Logging: Add S3 logging to Go metrics tool (2h).
   - Go CLI Flags: Add flags for customizable metrics output (2h).
 - **Day 4** (Ubuntu: Prometheus, M3: Blockchain):
   - Prometheus PromQL: Query metrics using PromQL basics (2h).
-  - Ethereum Testnets: Practice with Sepolia testnet for safe experimentation (2h).
+  - Solana Testnets: Practice with Devnet for safe experimentation (2h).
   - Go Custom Metrics: Enhance tool with custom system metrics (2h).
-  - Ethereum Wallets: Explore key pairs and wallets (e.g., MetaMask) (2h).
+  - Solana Wallets: Explore key pairs and wallets (e.g., Phantom) (2h).
 - **Day 5** (Ubuntu: Prometheus, M3: Go/AWS):
   - AWS S3 Testing: Verify log sync to S3 bucket (2h).
   - Go Commit: Commit metrics tool to GitHub (2h).
@@ -211,44 +210,44 @@
   - GitHub README: Add metrics tool setup to repo README (2h).
 - **Weekend Project**: `sys-metrics` – Go tool + Prometheus for system metrics, logs in S3, GitHub repo with README.
 - **Definition of Done**: Tool exports metrics, Prometheus scrapes, S3 stores logs, repo has README with setup, blockchain concepts deepened.
-- **Resources**: Prometheus.io, AWS S3 Docs, Ethereum.org “Developers”.
+- **Resources**: Prometheus.io, AWS S3 Docs, Solana Docs “Developers”.
 - **Hardware**: Ubuntu MacBook (Prometheus), M3 MacBook (AWS, Go, Blockchain).
 - **Outcome**: Monitoring basics, S3 integration, advanced blockchain knowledge.
 
 ---
 
-## Week 7: Ethereum Light Node, Docker, and Go
-- **Goals**: Run Ethereum light node, secure Dockerized Go app, enhance CLI with Ethereum tasks.
-- **Day 1** (Ubuntu: Geth, M3: Go):
-  - Ethereum Geth Setup: Install Geth and run light node (`geth --syncmode light`) (2h).
-  - Go RPC Query: Write Go code to query Ethereum RPC (`eth_blockNumber`) (2h).
+## Week 7: Solana Testnet Node, Docker, and Go
+- **Goals**: Run Solana testnet node, secure Dockerized Go app, enhance CLI with Solana tasks.
+- **Day 1** (Ubuntu: Solana, M3: Go):
+  - Solana Node Setup: Install Solana CLI and run testnet node (`solana-test-validator`) (2h).
+  - Go RPC Query: Write Go code to query Solana RPC (`getBlockHeight`) (2h).
   - Docker Security: Use `distroless` for Go app Dockerfile (2h).
-  - Ethereum Testnet Setup: Configure Sepolia testnet node (2h).
-- **Day 2** (Ubuntu: Docker/Geth, M3: Go):
+  - Solana Testnet Setup: Configure Devnet node for practice (2h).
+- **Day 2** (Ubuntu: Docker/Solana, M3: Go):
   - Docker Go App: Write secure Dockerfile with multi-stage build (2h).
-  - Ethereum RPC Testing: Test Geth RPC endpoint with `curl` (2h).
+  - Solana RPC Testing: Test Solana RPC endpoint with `curl` (2h).
   - Docker Trivy Scan: Scan Go app image for vulnerabilities with Trivy (2h).
   - Go RPC Integration: Integrate RPC query into CLI (2h).
 - **Day 3** (Ubuntu: Docker, M3: Go):
-  - Go Ethereum CLI: Build CLI to log Ethereum block height (2h).
+  - Go Solana CLI: Build CLI to log Solana block height (2h).
   - Docker Image Build: Build and test secure Docker image (2h).
-  - Ethereum Gas Analysis: Analyze gas usage for sample transactions (2h).
+  - Solana Transaction Fees: Analyze lamport usage for sample transactions (2h).
   - Docker Volumes: Configure volumes for persistent CLI data (2h).
-- **Day 4** (Ubuntu: Geth, M3: Go):
-  - Ethereum Systemd: Setup Geth as a systemd service for auto-start (2h).
+- **Day 4** (Ubuntu: Solana, M3: Go):
+  - Solana Systemd: Setup Solana node as a systemd service for auto-start (2h).
   - Go CLI Enhancements: Add flags for customizable RPC queries (2h).
-  - Ethereum Node Monitoring: Monitor Geth logs for sync status (2h).
+  - Solana Node Monitoring: Monitor Solana logs for sync status (2h).
   - Go Error Handling: Handle RPC errors in CLI (2h).
-- **Day 5** (Ubuntu: Docker/Geth, M3: Go):
+- **Day 5** (Ubuntu: Docker/Solana, M3: Go):
   - Docker Hub Push: Push secure Go app image to Docker Hub (2h).
   - Go Commit: Commit CLI code to GitHub (2h).
-  - Ethereum Node Verification: Verify light node sync progress (2h).
-  - GitHub README: Add Ethereum CLI setup to repo README (2h).
-- **Weekend Project**: `eth-ping` – Secure Dockerized Go CLI to ping Ethereum node, logs to S3, GitHub repo.
+  - Solana Node Verification: Verify testnet node sync progress (2h).
+  - GitHub README: Add Solana CLI setup to repo README (2h).
+- **Weekend Project**: `solana-ping` – Secure Dockerized Go CLI to ping Solana node, logs to S3, GitHub repo.
 - **Definition of Done**: CLI queries block height, Docker image is secure, repo has README with setup and security details.
-- **Resources**: Ethereum.org “Running a Node”, Docker Docs, Trivy Docs.
-- **Hardware**: Ubuntu MacBook (Geth, Docker), M3 MacBook (Go).
-- **Outcome**: Ethereum light node, secure Dockerized Go app, testnet familiarity.
+- **Resources**: Solana Docs “Running a Validator”, Docker Docs, Trivy Docs.
+- **Hardware**: Ubuntu MacBook (Solana, Docker), M3 MacBook (Go).
+- **Outcome**: Solana testnet node, secure Dockerized Go app, testnet familiarity.
 
 ---
 
@@ -287,73 +286,73 @@
 
 ---
 
-## Week 9: Grafana, Ethereum Monitoring, and Terraform
-- **Goals**: Setup Grafana, monitor Ethereum node, advance Terraform, draft blog post.
+## Week 9: Grafana, Solana Monitoring, and Terraform
+- **Goals**: Setup Grafana, monitor Solana node, advance Terraform, draft blog post.
 - **Day 1** (Ubuntu):
   - Grafana Installation: Install Grafana for visualization (2h).
-  - Ethereum Log Monitoring: Monitor Geth logs for sync status (2h).
+  - Solana Log Monitoring: Monitor Solana node logs for sync status (2h).
   - Grafana Data Source: Add Prometheus as a Grafana data source (2h).
-  - Ethereum RPC Queries: Query Geth RPC for block height (2h).
+  - Solana RPC Queries: Query Solana RPC for block height (2h).
 - **Day 2** (Ubuntu: Grafana, M3: Terraform):
   - Terraform Installation: Install Terraform for infrastructure as code (2h).
   - Grafana Dashboard: Build CPU/memory dashboard in Grafana (2h).
   - Terraform S3: Write Terraform script for S3 bucket (2h).
   - Grafana Panels: Create basic panels for system metrics (2h).
-- **Day 3** (Ubuntu: Geth, M3: Go):
-  - Ethereum Metrics: Query Geth for metrics (e.g., peer count) (2h).
-  - Go Prometheus Exporter: Build Go tool to export Geth metrics (2h).
-  - Ethereum Node Optimization: Adjust Geth cache for performance (2h).
-  - Go Metrics Integration: Integrate Geth metrics into Prometheus (2h).
+- **Day 3** (Ubuntu: Solana, M3: Go):
+  - Solana Metrics: Query Solana for metrics (e.g., transaction rate) (2h).
+  - Go Prometheus Exporter: Build Go tool to export Solana metrics (2h).
+  - Solana Node Optimization: Adjust Solana node config for performance (2h).
+  - Go Metrics Integration: Integrate Solana metrics into Prometheus (2h).
 - **Day 4** (Ubuntu: Grafana, M3: Terraform):
-  - Grafana Ethereum Dashboard: Add Geth metrics to Grafana dashboard (2h).
+  - Grafana Solana Dashboard: Add Solana metrics to Grafana dashboard (2h).
   - Terraform EC2: Write Terraform script for EC2 instance (2h).
   - Grafana Visualizations: Customize dashboard with graphs and gauges (2h).
   - Terraform Variables: Use variables in Terraform scripts (2h).
-- **Day 5** (Ubuntu: Geth/Grafana, M3: Go):
-  - Go Commit: Commit Geth metrics tool to GitHub (2h).
-  - Ethereum Sync Check: Verify Geth light node sync status (2h).
-  - Grafana Finalization: Finalize Ethereum metrics dashboard (2h).
+- **Day 5** (Ubuntu: Solana/Grafana, M3: Go):
+  - Go Commit: Commit Solana metrics tool to GitHub (2h).
+  - Solana Sync Check: Verify Solana testnet node sync status (2h).
+  - Grafana Finalization: Finalize Solana metrics dashboard (2h).
   - GitHub README: Add dashboard setup to repo README (2h).
-- **Weekend Project**: `eth-monitor` – Go tool + Grafana dashboard for Ethereum metrics, GitHub repo with blog post draft.
-- **Definition of Done**: Dashboard shows Geth metrics, tool exports data, repo has README with screenshots, blog post drafted.
-- **Resources**: Grafana Labs, Ethereum.org, HashiCorp “Learn Terraform”.
-- **Hardware**: Ubuntu MacBook (Geth, Grafana), M3 MacBook (Terraform, Go).
-- **Outcome**: Ethereum monitoring, Terraform basics, blogging skills.
+- **Weekend Project**: `solana-monitor` – Go tool + Grafana dashboard for Solana metrics, GitHub repo with blog post draft.
+- **Definition of Done**: Dashboard shows Solana metrics, tool exports data, repo has README with screenshots, blog post drafted.
+- **Resources**: Grafana Labs, Solana Docs, HashiCorp “Learn Terraform”.
+- **Hardware**: Ubuntu MacBook (Solana, Grafana), M3 MacBook (Terraform, Go).
+- **Outcome**: Solana monitoring, Terraform basics, blogging skills.
 
 ---
 
-## Week 10: AWS KMS, Go Secrets, and Ethereum Advanced
-- **Goals**: Secure secrets with KMS, build Go secrets CLI, advance Ethereum node ops.
+## Week 10: AWS KMS, Go Secrets, and Solana Advanced
+- **Goals**: Secure secrets with KMS, build Go secrets CLI, advance Solana node ops.
 - **Day 1** (M3):
   - Kubernetes App Deployment: Deploy Go app to Minikube (2h).
   - AWS KMS Setup: Store a fake validator key in AWS KMS (2h).
   - Go KMS CLI: Build Go CLI to fetch KMS secrets (2h).
   - kubectl Debugging: Use `kubectl describe`, `logs` to debug pods (2h).
 - **Day 2** (M3):
-  - Go Health Checker: Build Go CLI to check Geth RPC health (2h).
+  - Go Health Checker: Build Go CLI to check Solana RPC health (2h).
   - AWS KMS IAM: Configure IAM role for KMS access (2h).
-  - Ethereum Node on AWS: Run Geth light node on AWS Free Tier EC2 (2h).
+  - Solana Node on AWS: Run Solana testnet node on AWS Free Tier EC2 (2h).
   - Kubernetes ConfigMaps: Configure app settings with ConfigMaps (2h).
 - **Day 3** (M3: Go):
   - Go Encryption: Add encryption functionality to CLI using KMS (2h).
-  - Ethereum RPC Security: Secure Geth RPC endpoint with authentication (2h).
+  - Solana RPC Security: Secure Solana RPC endpoint with authentication (2h).
   - Go Health Integration: Add health check logic to CLI (2h).
   - Go Testing: Write tests for health checker functionality (2h).
 - **Day 4** (M3):
   - AWS KMS Testing: Test secret retrieval with KMS CLI (2h).
   - Go Decryption: Add decryption functionality to CLI (2h).
-  - Kubernetes StatefulSet: Write StatefulSet for Geth with Helm chart (2h).
-  - Kubernetes PVCs: Configure PersistentVolumeClaims for Geth data (2h).
+  - Kubernetes StatefulSet: Write StatefulSet for Solana node with Helm chart (2h).
+  - Kubernetes PVCs: Configure PersistentVolumeClaims for Solana data (2h).
 - **Day 5** (M3):
-  - Ethereum Node Management: Monitor and manage Geth node on AWS (2h).
+  - Solana Node Management: Monitor and manage Solana node on AWS (2h).
   - Go Commit: Commit KMS and health checker CLI to GitHub (2h).
   - Kubernetes Testing: Test StatefulSet and Helm chart in Minikube (2h).
-  - GitHub README: Add KMS and Ethereum setup to repo README (2h).
-- **Weekend Project**: `secure-eth` – Go CLI for KMS-encrypted keys, Geth node on AWS, Kubernetes Helm deployment, GitHub repo.
-- **Definition of Done**: CLI encrypts/decrypts, Geth node runs on AWS, Helm chart deploys, repo has README with setup.
-- **Resources**: AWS KMS Docs, Ethereum.org “Running a Node”, Kubernetes.io, Helm Docs.
-- **Hardware**: M3 MacBook (all tasks), AWS Free Tier (Ethereum).
-- **Outcome**: Secure key management, advanced Ethereum node ops, Kubernetes deployment.
+  - GitHub README: Add KMS and Solana setup to repo README (2h).
+- **Weekend Project**: `secure-solana` – Go CLI for KMS-encrypted keys, Solana node on AWS, Kubernetes Helm deployment, GitHub repo.
+- **Definition of Done**: CLI encrypts/decrypts, Solana node runs on AWS, Helm chart deploys, repo has README with setup.
+- **Resources**: AWS KMS Docs, Solana Docs “Running a Validator”, Kubernetes.io, Helm Docs.
+- **Hardware**: M3 MacBook (all tasks), AWS Free Tier (Solana).
+- **Outcome**: Secure key management, advanced Solana node ops, Kubernetes deployment.
 
 ---
 
@@ -365,17 +364,17 @@
   - Terraform S3 Backend: Configure S3 + DynamoDB for state management (2h).
   - Terraform Modules: Organize EKS script into reusable modules (2h).
 - **Day 2** (M3):
-  - EKS Geth Deployment: Deploy Geth + Go app to EKS with Helm chart (2h).
-  - Portfolio README: Write README for `eth-monitor` project (2h).
+  - EKS Solana Deployment: Deploy Solana + Go app to EKS with Helm chart (2h).
+  - Portfolio README: Write README for `solana-monitor` project (2h).
   - Terraform DRY Patterns: Use modules for reusable EKS code (2h).
-  - EKS Networking: Configure EKS networking for Geth (2h).
+  - EKS Networking: Configure EKS networking for Solana (2h).
 - **Day 3** (M3):
   - EKS Monitoring: Add Prometheus/Grafana to EKS via Helm (2h).
-  - Portfolio Enhancement: Add screenshots to `eth-monitor` README (2h).
+  - Portfolio Enhancement: Add screenshots to `solana-monitor` README (2h).
   - Terraform State Locking: Implement state locking with DynamoDB (2h).
   - Prometheus Operator: Install Prometheus operator in EKS (2h).
 - **Day 4** (M3):
-  - EKS Helm Testing: Test Geth + Go app Helm deployment in EKS (2h).
+  - EKS Helm Testing: Test Solana + Go app Helm deployment in EKS (2h).
   - Portfolio Refinement: Update `aws-infra` README with details (2h).
   - Terraform Workspaces: Explore Terraform workspaces for environments (2h).
   - EKS Load Balancer: Configure load balancer for EKS services (2h).
@@ -384,8 +383,8 @@
   - Portfolio Finalization: Finalize all repo READMEs and diagrams (2h).
   - EKS kubectl Debugging: Use `kubectl rollout` to manage deployments (2h).
   - GitHub README: Add EKS setup to `web3-toolkit` README (2h).
-- **Weekend Project**: `web3-toolkit` – EKS Helm deployment of Geth + Go app, Prometheus/Grafana, Terraform S3 backend, GitHub repo with blog post.
-- **Definition of Done**: EKS runs Geth/app via Helm, dashboard works, Terraform uses S3 backend, repos have READMEs/diagrams, blog post published.
+- **Weekend Project**: `web3-toolkit` – EKS Helm deployment of Solana + Go app, Prometheus/Grafana, Terraform S3 backend, GitHub repo with blog post.
+- **Definition of Done**: EKS runs Solana/app via Helm, dashboard works, Terraform uses S3 backend, repos have READMEs/diagrams, blog post published.
 - **Resources**: Terraform EKS Module, Helm Docs, draw.io.
 - **Hardware**: M3 MacBook (all tasks).
 - **Outcome**: Production-ready EKS deployment, advanced Terraform, polished portfolio.
@@ -416,10 +415,10 @@
   - AWS RDS Basics: Study relational database service basics (2h).
 - **Day 5** (M3):
   - AWS Weak Areas: Review weak areas from practice exam (2h).
-  - Portfolio Blog: Publish blog on “Deploying Ethereum Node on EKS” (Medium) (2h).
+  - Portfolio Blog: Publish blog on “Deploying Solana Node on EKS” (Medium) (2h).
   - AWS Exam Scheduling: Schedule certification exam (2h).
   - Portfolio Final Check: Ensure all repos are polished (2h).
-- **Weekend Project**: Updated portfolio with blog: “Deploying Ethereum Node on EKS”.
+- **Weekend Project**: Updated portfolio with blog: “Deploying Solana Node on EKS”.
 - **Definition of Done**: Score 80%+ on practice exams, blog published, portfolio complete.
 - **Resources**: Udemy “AWS Solutions Architect” (Stephane Maarek), Whizlabs.
 - **Hardware**: M3 MacBook.
@@ -431,8 +430,8 @@
 - **Goals**: Apply to jobs, network, finalize portfolio with system design.
 - **Day 1** (M3):
   - Job Applications: Apply to 10 DevOps/Web3 jobs on Web3.career, LinkedIn (2h).
-  - X Networking: Engage with @ethereum posts on X (2h).
-  - System Design Prep: Study CI/CD pipeline design for Ethereum nodes (2h).
+  - X Networking: Engage with @solana posts on X (2h).
+  - System Design Prep: Study CI/CD pipeline design for Solana nodes (2h).
   - Resume Tailoring: Customize resume for DevOps roles (2h).
 - **Day 2** (M3):
   - Job Applications: Apply to 10 jobs on CryptoJobsList, Turing (2h).
@@ -453,8 +452,8 @@
   - Job Applications: Apply to 5 jobs with custom cover letters (2h).
   - Recruiter Outreach: Connect with 10 recruiters on LinkedIn (2h).
   - Portfolio Video: Upload 5-minute `web3-toolkit` demo video to GitHub/YouTube (2h).
-  - System Design Doc: Draft doc for “Ethereum CI/CD” design (2h).
-- **Weekend Project**: Final portfolio, 5-minute video demo of `web3-toolkit`, system design doc for “Ethereum CI/CD”.
+  - System Design Doc: Draft doc for “Solana CI/CD” design (2h).
+- **Weekend Project**: Final portfolio, 5-minute video demo of `web3-toolkit`, system design doc for “Solana CI/CD”.
 - **Definition of Done**: 30+ applications submitted, video demo uploaded, 10+ connections made, system design doc completed.
 - **Resources**: Web3.career, CryptoJobsList, STAR Method for Resumes, “System Design Interview” (YouTube).
 - **Hardware**: M3 MacBook.
@@ -463,7 +462,7 @@
 ---
 
 ## Outcomes
-- **Skills**: Git, Docker (secure), Terraform (advanced), Kubernetes (Helm, EKS), AWS, Go, blockchain fundamentals, Ethereum light node, monitoring, advanced node ops, Prometheus/Grafana, ArgoCD.
-- **Portfolio**: 7 GitHub projects (`sys-monitor`, `docker-check`, `docker-stack`, `aws-monitor`, `docker-block`, `eth-monitor`, `web3-toolkit`), blog posts, system design doc.
+- **Skills**: Git, Docker (secure), Terraform (advanced), Kubernetes (Helm, EKS), AWS, Go, blockchain fundamentals, Solana testnet node, monitoring, advanced node ops, Prometheus/Grafana, ArgoCD.
+- **Portfolio**: 7 GitHub projects (`sys-monitor`, `docker-check`, `docker-stack`, `aws-monitor`, `docker-block`, `solana-monitor`, `web3-toolkit`), blog posts, system design doc.
 - **Certification**: AWS Solutions Architect – Associate ($150).
 
