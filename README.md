@@ -1,7 +1,8 @@
-# 13-Week Mixed Roadmap: DevOps, Cloud, Go, and Web3 (8 Hours/Day)
+## 13-Week Mixed Roadmap: DevOps, Cloud, Go, and Web3 (8 Hours/Day)
+
 
 **Hardware**: Ubuntu MacBook (8GB/256GB, EC2-like), M3 MacBook (24GB/512GB).  
-**Focus**: Blend Git, Docker, Terraform, Kubernetes, AWS, Go, blockchain fundamentals, and Solana (testnet node, monitoring, advanced ops) weekly, with enhanced Kubernetes (Helm, EKS), Docker security, Terraform (S3 backend), CI/CD (ArgoCD), and system design. No Polygon/Ethereum; Solana replaces Ethereum in Weeks 7, 9-10.  
+**Focus**: Blend Git, Docker, Terraform, Kubernetes, AWS, Go, blockchain basics, advanced blockchain, Solana basics, and advanced Solana ops weekly, with enhanced Kubernetes (Helm, EKS), Docker security, Terraform (S3 backend), CI/CD (ArgoCD), and system design. No Ethereum/Polygon; focus on blockchain (Weeks 5-6) and Solana (Weeks 7, 9-10) for Web3 infrastructure.  
 **Structure**: Each week mixes 2-3 skills with daily topics (Day 1-5, 8 hours), weekend projects, and resources. Each topic has a one-line intro.
 
 ---
@@ -146,7 +147,7 @@
 
 ---
 
-## Week 5: Blockchain Fundamentals, Docker, and Go
+## Week 5: Blockchain Basics, Docker, and Go
 - **Goals**: Learn essential blockchain concepts, secure Dockerized Go app, enhance CLI.
 - **Day 1** (Ubuntu: Docker, M3: Blockchain):
   - Blockchain Basics: Understand blockchain as a decentralized, immutable ledger (2h).
@@ -181,8 +182,8 @@
 
 ---
 
-## Week 6: Prometheus, AWS S3, and Blockchain Deep Dive
-- **Goals**: Setup Prometheus, use S3, explore deeper blockchain concepts for Solana.
+## Week 6: Blockchain Advanced, AWS S3, and Prometheus
+- **Goals**: Deepen blockchain knowledge, use S3, setup Prometheus.
 - **Day 1** (Ubuntu: Prometheus, M3: AWS):
   - Prometheus Installation: Install Prometheus and Node Exporter for metrics (2h).
   - AWS S3 Setup: Create S3 bucket and sync sample logs (2h).
@@ -212,14 +213,14 @@
 - **Definition of Done**: Tool exports metrics, Prometheus scrapes, S3 stores logs, repo has README with setup, blockchain concepts deepened.
 - **Resources**: Prometheus.io, AWS S3 Docs, Solana Docs “Developers”.
 - **Hardware**: Ubuntu MacBook (Prometheus), M3 MacBook (AWS, Go, Blockchain).
-- **Outcome**: Monitoring basics, S3 integration, advanced blockchain knowledge.
+- **Outcome**: Advanced blockchain knowledge, S3 integration, monitoring basics.
 
 ---
 
-## Week 7: Solana Testnet Node, Docker, and Go
+## Week 7: Solana Basics, Docker, and Go
 - **Goals**: Run Solana testnet node, secure Dockerized Go app, enhance CLI with Solana tasks.
 - **Day 1** (Ubuntu: Solana, M3: Go):
-  - Solana Node Setup: Install Solana CLI and run testnet node (`solana-test-validator`) (2h).
+  - Solana CLI Setup: Install Solana CLI and run testnet node (`solana-test-validator`) (2h).
   - Go RPC Query: Write Go code to query Solana RPC (`getBlockHeight`) (2h).
   - Docker Security: Use `distroless` for Go app Dockerfile (2h).
   - Solana Testnet Setup: Configure Devnet node for practice (2h).
@@ -286,7 +287,7 @@
 
 ---
 
-## Week 9: Grafana, Solana Monitoring, and Terraform
+## Week 9: Grafana, Solana Advanced, and Terraform
 - **Goals**: Setup Grafana, monitor Solana node, advance Terraform, draft blog post.
 - **Day 1** (Ubuntu):
   - Grafana Installation: Install Grafana for visualization (2h).
@@ -328,30 +329,30 @@
   - AWS KMS Setup: Store a fake validator key in AWS KMS (2h).
   - Go KMS CLI: Build Go CLI to fetch KMS secrets (2h).
   - kubectl Debugging: Use `kubectl describe`, `logs` to debug pods (2h).
-- **Day 2** (M3):
-  - Go Health Checker: Build Go CLI to check Solana RPC health (2h).
-  - AWS KMS IAM: Configure IAM role for KMS access (2h).
+- **Day 2** (M3: KMS, AWS: Solana):
   - Solana Node on AWS: Run Solana testnet node on AWS Free Tier EC2 (2h).
+  - AWS KMS IAM: Configure IAM role for KMS access (2h).
+  - Go Health Checker: Build Go CLI to check Solana RPC health (2h).
   - Kubernetes ConfigMaps: Configure app settings with ConfigMaps (2h).
-- **Day 3** (M3: Go):
+- **Day 3** (M3: Go, AWS: Solana):
   - Go Encryption: Add encryption functionality to CLI using KMS (2h).
   - Solana RPC Security: Secure Solana RPC endpoint with authentication (2h).
   - Go Health Integration: Add health check logic to CLI (2h).
-  - Go Testing: Write tests for health checker functionality (2h).
+  - Solana Node Management: Monitor and manage Solana node on AWS (2h).
 - **Day 4** (M3):
   - AWS KMS Testing: Test secret retrieval with KMS CLI (2h).
   - Go Decryption: Add decryption functionality to CLI (2h).
   - Kubernetes StatefulSet: Write StatefulSet for Solana node with Helm chart (2h).
   - Kubernetes PVCs: Configure PersistentVolumeClaims for Solana data (2h).
 - **Day 5** (M3):
-  - Solana Node Management: Monitor and manage Solana node on AWS (2h).
   - Go Commit: Commit KMS and health checker CLI to GitHub (2h).
   - Kubernetes Testing: Test StatefulSet and Helm chart in Minikube (2h).
+  - Solana Advanced Monitoring: Setup advanced metrics (e.g., transaction rate) on AWS node (2h).
   - GitHub README: Add KMS and Solana setup to repo README (2h).
 - **Weekend Project**: `secure-solana` – Go CLI for KMS-encrypted keys, Solana node on AWS, Kubernetes Helm deployment, GitHub repo.
 - **Definition of Done**: CLI encrypts/decrypts, Solana node runs on AWS, Helm chart deploys, repo has README with setup.
 - **Resources**: AWS KMS Docs, Solana Docs “Running a Validator”, Kubernetes.io, Helm Docs.
-- **Hardware**: M3 MacBook (all tasks), AWS Free Tier (Solana).
+- **Hardware**: M3 MacBook (KMS, Go, Kubernetes), AWS Free Tier (Solana).
 - **Outcome**: Secure key management, advanced Solana node ops, Kubernetes deployment.
 
 ---
@@ -462,7 +463,7 @@
 ---
 
 ## Outcomes
-- **Skills**: Git, Docker (secure), Terraform (advanced), Kubernetes (Helm, EKS), AWS, Go, blockchain fundamentals, Solana testnet node, monitoring, advanced node ops, Prometheus/Grafana, ArgoCD.
-- **Portfolio**: 7 GitHub projects (`sys-monitor`, `docker-check`, `docker-stack`, `aws-monitor`, `docker-block`, `solana-monitor`, `web3-toolkit`), blog posts, system design doc.
+- **Skills**: Git, Docker (secure), Terraform (advanced), Kubernetes (Helm, EKS), AWS, Go, blockchain fundamentals, advanced blockchain, Solana basics, advanced Solana ops, Prometheus/Grafana, ArgoCD.
+- **Portfolio**: 6 GitHub projects (`sys-monitor`, `docker-check`, `docker-stack`, `aws-monitor`, `solana-ping`, `solana-monitor`, `web3-toolkit`), blog posts, system design doc.
 - **Certification**: AWS Solutions Architect – Associate ($150).
 
