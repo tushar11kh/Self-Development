@@ -1,5 +1,7 @@
 # Day 1
 
+---
+
 ## Write docker-compose.yml for NGINX + Redis stack
 
 We want to use **Docker Compose** to launch two services:
@@ -9,7 +11,6 @@ We want to use **Docker Compose** to launch two services:
 
 They will be containerized and networked together using Docker Compose.
 
----
 
 ### 🧠 Deep Conceptual Understanding
 
@@ -18,7 +19,6 @@ They will be containerized and networked together using Docker Compose.
 * Docker Compose allows you to **define and run multi-container Docker applications** using a YAML file.
 * It handles **networking**, **volume mounts**, and **environment config** between services.
 
----
 
 ### ⚙️ Services Breakdown
 
@@ -36,11 +36,8 @@ They will be containerized and networked together using Docker Compose.
   * Pub/Sub messaging
   * Session management
 
----
 
 ### 📄 `docker-compose.yml` File
-
----
 
 ### 🔍 Explained in Detail
 
@@ -78,7 +75,6 @@ Defines all containers in your stack.
 | `/etc/nginx/nginx.conf` | Path inside the **NGINX container** (replaces default config)    |
 | `:ro`                   | Mount is **read-only** (for safety, NGINX can't modify it)       |
 
----
 
 ##### redis:
 
@@ -99,15 +95,11 @@ nginx-redis-stack/
 │   └── index.html
 ```
 
----
 
 ### ✍️ Sample `nginx.conf`
 
 This config makes NGINX serve static files and optionally connect to Redis (via a Lua module or upstream app):
 
-
-
----
 
 ### 🧪 Running It
 
@@ -120,7 +112,6 @@ docker compose up -d
 * Visit `http://localhost:8080` → Should serve `index.html`
 * Run `docker exec -it redis_cache redis-cli` → Use the Redis CLI inside container
 
----
 
 ### 🧼 Cleaning Up
 
@@ -130,7 +121,6 @@ docker compose down -v
 
 This removes containers **and** volumes (Redis data).
 
----
 
 ### 🧠 Extra Concepts You Should Understand
 
@@ -142,7 +132,6 @@ This removes containers **and** volumes (Redis data).
 | **Stateless vs Persistent** | NGINX is stateless, Redis stores data (persistence is optional)          |
 | **Configuration Mounts**    | Allows you to control behavior without rebuilding the image              |
 
----
 
 ### 🧭 What You Can Do Next
 
@@ -152,7 +141,6 @@ This removes containers **and** volumes (Redis data).
 4. Setup a **Docker network bridge** for better service isolation.
 5. Use **Redis password** and secure the stack.
 
----
 
 ### 🧪 Bonus: How Redis & NGINX Might Interact?
 
@@ -173,7 +161,6 @@ Client → NGINX (proxy) → App Server (e.g., Go) ↔ Redis
 
 Perfect. Let’s break this down **from first principles** so you deeply understand how to build a real-world Go HTTP client.
 
----
 
 ## ✅ **Goal**
 
@@ -184,7 +171,6 @@ You will build a Go program that:
 * **Parses** the response into a Go `struct`
 * **Prints** the parsed data in a human-readable format
 
----
 
 ## 📍 The API You're Calling
 
@@ -207,11 +193,9 @@ This simulates a RESTful backend. It returns:
 
 You need to fetch this and work with it **programmatically**.
 
----
 
 ## 🧠 **Concepts You’ll Learn**
 
----
 
 ### 1. `net/http`
 
@@ -220,7 +204,6 @@ You need to fetch this and work with it **programmatically**.
 * You’ll use `http.Get()` to make the request.
 * This returns an `*http.Response`.
 
----
 
 ### 2. `io.ReadAll`
 
@@ -232,7 +215,6 @@ bodyBytes, err := io.ReadAll(resp.Body)
 
 You must **close** the body with `defer resp.Body.Close()` to avoid resource leaks.
 
----
 
 ### 3. `encoding/json`
 
@@ -241,7 +223,6 @@ You must **close** the body with `defer resp.Body.Close()` to avoid resource lea
 * You’ll define a Go `struct` with JSON tags.
 * Use `json.Unmarshal()` to decode JSON into that struct.
 
----
 
 ### 4. Struct Mapping (`Unmarshalling`)
 
@@ -258,11 +239,9 @@ type Post struct {
 
 The field names in Go **don’t have to match JSON exactly** — the tags (`json:"..."`) handle that.
 
----
 
 ## 🛠️ **Step-by-Step Guide to Build This**
 
----
 
 ### ✅ Step 1: Set Up Your Project
 
@@ -273,7 +252,6 @@ go-http-client/
 └── main.go
 ```
 
----
 
 ### ✅ Step 2: Write Full Go Code 
 
@@ -295,7 +273,6 @@ Title: sunt aut facere repellat provident occaecati excepturi optio reprehenderi
 Body : quia et suscipit...
 ```
 
----
 
 ## 🧠 Why This Is Important in DevOps / Backend / Web3
 
@@ -306,7 +283,7 @@ Body : quia et suscipit...
 | Error handling | Production-grade Go requires strong, readable error handling            |
 | Struct tags    | Crucial for working with APIs, databases (e.g., GORM, DynamoDB, etc.)   |
 
----
+
 
 ## 🔁 Extension Ideas
 
@@ -322,12 +299,162 @@ If you want to go deeper:
 
 ---
 
-Would you like to extend this into:
+## Compose Services: Define services and networks in Compose file
 
-* a CLI that takes post ID as input?
-* or a Go program that POSTs data to the API?
+**What is a Service in Docker Compose?**
 
-Let me know how deep you want to go.
+- A **service** defines *how a container should be run*. Each service corresponds to a container (or set of similar containers) that works together as part of your application.
+- Each service block sets up configuration (image, build context, ports, environments, volumes, etc.) for that container.
+- Services enable *modular application architecture*: you can separately configure, scale, and manage web apps, databases, caches, etc.
+
+**Key Fields Inside a Service**
+- `image`: The Docker image to use (from Docker Hub or built by you).
+- `build`: Path to the build context (where Dockerfile is), if you build the image yourself.
+- `ports`: Expose ports to the host (`host:container` format).
+- `environment`: Pass environment variables to the container.
+- `volumes`: Mount host folders or named volumes into the container for persistent data.
+- `depends_on`: Start order for services (does NOT mean readiness—just startup order).
+- `command`, `entrypoint`: Override the default command/entrypoint.
+
+**Example: Web and Database Services**
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - mynet
+
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - mynet
+```
+
+- Here, `web` (nginx) and `db` (Postgres) are two independent but connected services.
+- Both are joined to a user-defined network called `mynet`.
+
+
+## Understanding Networks in Compose
+
+**What is a Network in Docker Compose?**
+
+- A **network** in Docker Compose is a virtual LAN for containers. It lets services find and talk to each other.
+- By default, all services in the same Compose file share a default application network, unless you customize it.
+- You can define multiple networks (to isolate parts of your app) and specify which services join which networks.
+
+**Why Use Custom Networks?**
+- **Isolation**: Separate databases, caches, or internal services from public-facing services.
+- **Security**: Restrict communication to only services that need it.
+- **Flexibility**: Simulate more complex architecture, like microservices or multi-tier apps.
+
+**Defining and Using Networks**
+```yaml
+networks:
+  mynet:
+    driver: bridge
+```
+- `driver: bridge` is the default for local deployment. (Other drivers exist for advanced/multi-host networking.)
+
+Attach services:
+```yaml
+services:
+  api:
+    image: myapi
+    networks:
+      - backend
+
+  db:
+    image: postgres
+    networks:
+      - backend
+
+  frontend:
+    image: myfrontend
+    networks:
+      - frontendnet
+
+networks:
+  backend:
+  frontendnet:
+```
+- This sets up two isolated subnets: `backend` (for `api` and `db`) and `frontendnet` (for `frontend`). The frontend cannot access the DB directly.
+
+## Step-by-Step: How to Do This
+
+1. **Identify the parts of your application**: What containers/services do you need? (e.g., frontend, backend, db, cache)
+2. **Define each service**: Add a block under `services:` specifying image/build, ports, environments, volumes as needed.
+3. **Decide on network topology**: Should every service access every other? Or do you want to limit connections?
+    - For small apps, one default network is fine.
+    - For security, define multiple networks and attach services selectively.
+4. **Define networks at the bottom of the file**:
+    ```yaml
+    networks:
+      my_network:
+        driver: bridge
+    ```
+5. **Attach services to networks** by listing networks under each service.
+6. Optional: define named volumes for persistence.
+7. Run with `docker compose up` to start all defined services and networks.
+
+## Practical Example
+
+A 3-tier app with isolated frontend and backend networks:
+```yaml
+version: "3.8"
+services:
+  frontend:
+    image: frontend-app
+    ports:
+      - "3000:80"
+    networks:
+      - frontnet
+
+  backend:
+    image: backend-app
+    networks:
+      - frontnet
+      - backnet
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - backnet
+
+networks:
+  frontnet:
+  backnet:
+
+volumes:
+  db_data:
+```
+- **Frontend** talks only to **Backend** via `frontnet`.
+- **Backend** talks to both **Frontend** and **DB**.
+- **DB** only accessible on `backnet`.
+
+## Best Practices
+
+- Use **named networks** for clarity and control.
+- Only attach necessary services to each network for security/isolation.
+- Use **service names as hostnames** inside networks (e.g., `postgres://db:5432`).
+- Use **named volumes** for persistent data.
+- Document your Compose files with `#` comments for maintainability.
+
+**Summary**:  
+- **Services**: Define containers, their settings, and relationships.
+- **Networks**: Define how containers connect to each other in virtual subnets.
+- Use and combine these to model, secure, and scale your application, from simple two-tier stacks to sophisticated multi-service systems. By thoughtfully designing `services` and `networks`, you can handle most deployment scenarios efficiently.
 
 
 
