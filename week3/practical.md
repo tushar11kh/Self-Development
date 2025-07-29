@@ -1,207 +1,368 @@
-# Hands-On: Practice \& Do for Docker Compose, Go HTTP Clients, and GitHub CI/CD
+You're on **Week 3** of your roadmap, which blends:
 
-## 1. Docker Compose
+* **Docker Compose** (infra + orchestration),
+* **Go** (HTTP clients + CLI),
+* **GitHub Actions** (CI/CD with security),
+* and a **weekend project** that ties it all together.
 
-### Composition Fundamentals
+Below is a **precise breakdown of what to do each day**, which machine to use, and the deep understanding you should aim for in each task.
 
-- Write a minimal `docker-compose.yml` describing two services (e.g., NGINX and Redis).
-- Validate your YAML file using `docker compose config` to catch indentation or syntax errors.
+---
 
+## ✅ OVERALL WEEK GOAL
 
-### Multi-Service Stack: NGINX and Redis
+* Run a **Docker Compose stack** with NGINX + Redis + Go App.
+* Build a **Go HTTP client** for public API + container stats.
+* Set up a **secure CI/CD pipeline** on GitHub using GitHub Actions + Secrets + Trivy.
+* Finish a weekend project called `docker-stack`.
 
-- Use Compose to spin up the NGINX and Redis services you defined.
-- Map NGINX’s port 80 to a host port (e.g., 8080:80) and verify access via browser or curl.
-- Use Compose service names (`nginx`, `redis`) to test inter-service communication (e.g., through a custom NGINX config or by inspecting logs).
+---
 
+## 🗓️ **Day 1: Compose + Go HTTP Client**
 
-### Compose Services and Networks
+**Machine Use:**
 
-- Add a custom user-defined network to your Compose file.
-- Run `docker network inspect` to observe network isolation and service connectivity.
-- Attempt to connect services not on the same network and verify they cannot reach each other.
+* **Ubuntu** → Docker Compose
+* **Mac M3** → Go HTTP client
 
+### 1. Docker Compose Basics (2h)
 
-### Persistent Data and Volumes
+✅ Write a full `docker-compose.yml` for:
 
-- Add a named volume for Redis data:
+* `nginx` (static file server)
+* `redis` (data store)
+
+🔎 Understand:
+
+* Services
+* Networks
+* Port mappings
+* Volumes
+* `depends_on`
+
+💡 **Already done above**, just build + run it with:
+
+```bash
+docker compose up -d
+```
+
+---
+
+### 2. Go HTTP Client (2h)
+
+✅ Write a Go program that:
+
+* Makes a GET request to `https://jsonplaceholder.typicode.com/posts/1`
+* Prints response in formatted output
+
+🧠 Learn:
+
+* `net/http`
+* `io.ReadAll`
+* `encoding/json`
+* Basic struct mapping
+
+---
+
+### 3. Compose Services + Networks (2h)
+
+✅ Modify your Compose file to:
+
+* Explicitly define a `backend` network
+* Add service names and make sure they're reachable internally (e.g., nginx can talk to redis)
+
+🧠 Learn:
+
+* Docker service discovery
+* How containers in the same Compose network communicate via DNS
+
+---
+
+### 4. Go API Integration (2h)
+
+✅ Integrate your API logic into your existing **Go CLI** (from Week 2).
+
+* Add a command like `cli fetch-post` to retrieve and print a post
+
+🧠 Learn:
+
+* Command flag handling (if using Cobra or `flag`)
+* Modular Go project layout
+
+---
+
+## 🗓️ **Day 2: GitHub Actions CI/CD + Compose Volumes**
+
+**Machine Use:**
+
+* **Ubuntu** → Compose execution
+* **Mac M3** → GitHub workflows
+
+### 1. GitHub Actions Setup (2h)
+
+✅ Create `.github/workflows/ci.yml`:
+
+* Use **matrix strategy** to test multiple Go versions
+* Steps: checkout, setup Go, run build/test
+
+🧠 Learn:
+
+* Matrix builds
+* YAML syntax in Actions
+
+---
+
+### 2. Run Compose Stack Locally (2h)
+
+✅ Run your full stack on Ubuntu:
+
+```bash
+docker compose up -d
+```
+
+✅ Verify:
+
+* NGINX is up (`curl localhost:8080`)
+* Redis responds (`docker exec redis redis-cli ping`)
+
+---
+
+### 3. GitHub Workflow Security (2h)
+
+✅ Add **GitHub Secrets**:
+
+* `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`
+* Reference them in Actions for secure Docker login & push
+
+🧠 Learn:
+
+* How secrets are injected (`${{ secrets.VARIABLE }}`)
+
+---
+
+### 4. Compose Volumes (2h)
+
+✅ Add volume to Redis service:
 
 ```yaml
 volumes:
-  redis-data:
-services:
-  redis:
-    ...
-    volumes:
-      - redis-data:/data
+  redis_data:
 ```
 
-- Insert test data into Redis, stop/remove the container, and restart to confirm persistence.
+And mount it:
 
+```yaml
+volumes:
+  - redis_data:/data
+```
 
-### Compose File Best Practices
+🧠 Learn:
 
-- Move environment variables into a `.env` file and reference them in your `docker-compose.yml`.
-- Implement secret injection using Compose (or Docker secrets if in Swarm mode) for sensitive config, and verify secrets do not appear in logs or with `docker inspect`.
+* Persistent volumes vs ephemeral containers
 
+---
 
-### Running and Managing Compose Stacks
+## 🗓️ **Day 3: Stats, Linting, Secrets**
 
-- Start your stack with `docker compose up -d`, stop it with `docker compose down`, and practice restarting single containers.
-- Use `docker compose logs` and `docker compose ps` to monitor your services.
-- Remove stopped containers and validate clean-up of volumes/networks as needed.
+**Machine Use: Mac M3**
 
+### 1. Go Container Stats via HTTP (2h)
 
-## 2. Go HTTP Client Development
+✅ Extend your Go CLI:
 
-### Go HTTP Client Fundamentals
+* Query `docker stats` via `http` (e.g., expose container stats via REST API in Go)
 
-- Write a CLI program in Go that fetches data from `https://jsonplaceholder.typicode.com/posts/1` and prints the result.
-- Compile and run the program from the command line.
+🧠 Learn:
 
+* Use Docker client SDK in Go (optional)
+* Or write HTTP server that runs `docker stats` and returns JSON
 
-### Request Handling
+---
 
-- Extend your client to send headers (e.g., set a fake `Authorization` header).
-- Add context-based timeouts, aborting requests that take too long.
+### 2. GitHub Actions Linting (2h)
 
+✅ Add:
 
-### Response Handling and Parsing
+* [`golangci-lint`](https://golangci-lint.run)
+* [`aquasecurity/trivy`](https://github.com/aquasecurity/trivy-action) for image scanning
 
-- Parse returned JSON into Go structs and print a user-friendly summary to the terminal.
-- Handle error responses: detect HTTP status codes outside the 2xx range and display meaningful error messages.
+🧠 Learn:
 
+* Linting & static analysis
+* Container vulnerability scanning
 
-### CLI Integration
+---
 
-- Refactor your program for flag support (e.g., `-endpoint` to select API resource).
-- Modularize code to separate CLI logic from HTTP request/response logic.
+### 3. Go Error Handling (2h)
 
+✅ Improve your Go client:
 
-### Testing Go HTTP Clients
+* Handle non-200 responses
+* Handle bad JSON
+* Use `log.Fatal` or `errors.Wrap` for clear debug info
 
-- Write simple tests for your API functions using table-driven style.
-- Use Go’s `httptest` package to mock the API, simulating success and error cases.
+---
 
+### 4. GitHub Secrets for Docker Push (2h)
 
-## 3. GitHub Actions CI/CD Pipeline
+✅ Confirm DockerHub login is using GitHub Secrets in your workflow:
 
-### Workflow Fundamentals
+```yaml
+- name: Login to DockerHub
+  run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+```
 
-- Create a `.github/workflows/main.yml` that triggers on every push and PR to your repository.
-- Define steps to check out the code, install dependencies, and run `go test`.
+---
 
+## 🗓️ **Day 4: Compose Go App + Testing**
 
-### Matrix Builds
+**Machine Use: Ubuntu for Compose, Mac M3 for Go**
 
-- Configure a matrix job to run your build/test step on at least two Go versions and two OSes (e.g., `ubuntu-latest` and `windows-latest`).
+### 1. Add Go App to Compose (2h)
 
+✅ Add a Go API server to your Compose stack:
 
-### Build, Lint, and Security Steps
+* Build Go binary
+* Create a `Dockerfile`
+* Add `go_app` service to Compose file
 
-- Add `golangci-lint` as a step to check for code linting warnings.
-- Integrate Trivy to scan your Docker images for vulnerabilities, and address any high/critical issues flagged.
+---
 
+### 2. Parse API Response in CLI (2h)
 
-### Secure CI/CD Credentials
+✅ Parse full JSON object (posts, comments, etc.) and display formatted output
 
-- Add a dummy secret (e.g., `DOCKERHUB_PASSWORD`) to your GitHub repo's Secrets.
-- Reference this secret in your workflow and use it to log in to Docker Hub during a build step. Ensure the secret isn’t leaked in any logs.
+* Use structs with `json` tags
 
+---
 
-### Workflow Security Best Practices
+### 3. Secure Compose with Env Vars (2h)
 
-- Explicitly set minimal permissions for workflow jobs (e.g., `permissions: read-all` or more restrictive as needed).
-- Review your workflow for any places secrets might be accidentally exposed (e.g., echoed to output).
+✅ Use `.env` file or `env_file:` in Compose
 
+* Store Redis password, app config securely
 
-## 4. Docker Compose Integration with Go Apps
+🧠 Learn:
 
-### Adding Go App to Compose Stack
+* Difference between `.env` and `environment:` in Compose
 
-- Add a new service to your `docker-compose.yml` that builds your Go app from a Dockerfile.
-- Ensure all services (Go app, Redis, NGINX) run together, and validate by hitting the app's endpoint.
+---
 
+### 4. Unit Testing in Go (2h)
 
-### Dockerfile Security and Hardening
+✅ Write tests for your HTTP client
 
-- Refactor your Dockerfile to use multi-stage builds, resulting in a small, production-ready image.
-- Set your app to run as a non-root user and verify by checking container processes.
+* Use `net/http/httptest`
+* Test happy & error paths
 
+---
 
-### Service Integration
+## 🗓️ **Day 5: Git + CI/CD Push + README**
 
-- Update your Go app to connect to Redis using the Compose network alias.
-- Store and retrieve sample data in Redis from your Go service, verifying cross-service networking.
+**Machine Use: Mac for Git/Go, Ubuntu for Compose**
 
+### 1. GitHub Actions: Push Docker Image (2h)
 
-### Docker Compose Stack Testing
+✅ Add GitHub Action step:
 
-- Use `docker compose logs`, `docker compose ps`, and built-in healthchecks to debug service failures.
-- Simulate service failures (e.g., force one to exit) to troubleshoot dependency and restart behavior.
+* Build Go app
+* Dockerize it
+* Push to DockerHub securely
 
+---
 
-## 5. Robust Go HTTP Client Enhancements
+### 2. Git Commit Updated CLI (2h)
 
-### Error Handling Strategies
+✅ Stage, commit, and push changes:
 
-- Implement custom error types in your Go client for network errors, HTTP status errors, and timeout errors. Print detailed diagnostics for each case.
-- Add a retry mechanism for failed HTTP requests, respecting a maximum retry count and implementing an exponential backoff strategy.
+```bash
+git add .
+git commit -m "Add Go HTTP client and Compose stack"
+git push origin main
+```
 
+---
 
-### Fetching Container Stats via HTTP
+### 3. Test Full Stack (2h)
 
-- Extend your CLI to interact with Docker’s Engine API (e.g., `GET /containers/json` or `/containers/{id}/stats`), either via local Unix socket or configured API endpoint.
-- Display core stats (CPU, mem, status) in a clear format.
+✅ Run your full Compose stack:
 
+```bash
+docker compose up --build
+```
 
-### Parsing and Validating API Responses
+✅ Test:
 
-- Add validation layers to ensure data types and values returned from APIs are as expected. Log warnings or errors for unexpected formats or missing fields.
-- Include structured logging for all errors and edge cases.
+* Can Go app connect to Redis?
+* Is NGINX accessible?
+* Is API client working?
 
+---
 
-## 6. Git and GitHub Best Practices
+### 4. Add README Details (2h)
 
-### Commit and Branching Workflow
+✅ Include in `README.md`:
 
-- Make all changes in clearly-named feature branches.
-- Commit logically related changes as atomic units with descriptive messages.
-- Regularly open pull requests and use review tools to address merge conflicts.
+* Project overview
+* Compose services
+* CI/CD pipeline steps
+* Security (Secrets, Trivy)
+* How to run/test it
 
+---
 
-### CI/CD Integration in Git Workflow
+## 🏁 Weekend Project: `docker-stack`
 
-- Enable required status checks on your GitHub branch protection rules.
-- Only merge pull requests after automated builds/tests pass.
+Your GitHub project should include:
 
+* `docker-compose.yml` with:
 
-## 7. Documentation and Project Readiness
+  * NGINX
+  * Redis
+  * Go App (Dockerized)
+* `Dockerfile` for Go App
+* GitHub Actions CI/CD
 
-### Comprehensive README
+  * Linting (golangci-lint)
+  * Security (Trivy)
+  * Build & Push Docker image
+* Go CLI with:
 
-- Add setup, build, run, and usage sections to your README.
-- Include example commands, sample output, CI/CD status badges, and troubleshooting tips.
+  * HTTP client for API
+  * Container stats endpoint (or call)
+* ✅ **README with full setup instructions + security setup**
 
+---
 
-### Compliance with Definition of Done
+## 🔚 Definition of Done
 
-- Maintain a project checklist (requirements, security, documentation, coverage).
-- Only mark work items complete after they pass this checklist and end-to-end testing.
+You are done when:
 
+✅ Stack runs with:
 
-## 8. Review \& Practice
+* NGINX
+* Redis
+* Go App
 
-### End-to-End Testing
+✅ CI/CD:
 
-- Deploy your full Compose stack, run through every user workflow from initial deployment to shutdown.
-- Confirm end-to-end functionality: service communication, secret handling, volume persistence, error reporting, and pipeline security.
+* Lints Go
+* Builds/pushes Docker image
+* Scans with Trivy
 
+✅ GitHub repo:
 
-### Peer Review (Optional)
+* Code organized
+* CI/CD workflows secure
+* README explains usage + security
 
-- Request reviews from teammates; respond to and incorporate feedback via PR comments.
-- Document notes on lessons learned and improvements implemented from review cycles.
+---
 
+If you'd like, I can now:
 
+1. Write your `.github/workflows/ci.yml` file.
+2. Build Go HTTP client code.
+3. Help create Dockerfile for your Go app.
+4. Guide Compose security practices in `.env`.
 
+Let me know which part you want done next.
